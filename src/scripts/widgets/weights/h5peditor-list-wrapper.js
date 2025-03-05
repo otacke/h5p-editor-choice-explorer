@@ -19,44 +19,46 @@ export default class ListWrapper {
     this.list = list;
     this.lastListValue = this.list.getValue();
 
-    this.dom = document.querySelector('label[for="' + this.list.getId() + '"]')?.parentElement;
+    Util.callOnceVisible(() => {
+      this.dom = document.querySelector('label[for="' + this.list.getId() + '"]')?.parentElement;
 
-    // This will fail if someone uses other list widgets with their own DOM structure.
-    const domH5PEditorList = this.dom.querySelector(`#${this.list.getId()}`);
-    const domH5PEditorVerticalTabs = this.dom.querySelector('.h5p-vtabs ol');
-    (domH5PEditorList ?? domH5PEditorVerticalTabs)?.addEventListener('mouseup', (event) => {
-      if (event.target.classList.contains('h5peditor-button') && event.target.classList.contains('remove')) {
-        return;
-      }
+      // This will fail if someone uses other list widgets with their own DOM structure.
+      const domH5PEditorList = this.dom.querySelector(`#${this.list.getId()}`);
+      const domH5PEditorVerticalTabs = this.dom.querySelector('.h5p-vtabs ol');
+      (domH5PEditorList ?? domH5PEditorVerticalTabs)?.addEventListener('mouseup', (event) => {
+        if (event.target.classList.contains('h5peditor-button') && event.target.classList.contains('remove')) {
+          return;
+        }
 
-      this.handleChanged();
-    });
+        this.handleChanged();
+      });
 
-    this.dom.addEventListener('change', (event) => {
-      this.handleChanged();
-    });
+      this.dom.addEventListener('change', (event) => {
+        this.handleChanged();
+      });
 
-    this.list.on('addedItem', () => {
-      this.handleChanged();
-    });
+      this.list.on('addedItem', () => {
+        this.handleChanged();
+      });
 
-    this.list.on('removedItem', () => {
+      this.list.on('removedItem', () => {
 
-      /*
-       * Workaround for VerticalTabs allowing to remove all items even when a minimum value is set.
-       * Pull request for VerticalTabs widget to fix this issue dates back to Nov 2022. Who
-       * wants to bet when H5P Group will address this issue (HFP-3989, H5P-3599)?
-       * @see {@link https://github.com/h5p/h5p-editor-vertical-tabs/pull/3}
-       */
-      if (this.list.field.min && (this.list.getValue() ?? []).length < this.list.field.min) {
-        this.list.addItem();
-        window.requestAnimationFrame(() => {
-          const event = new KeyboardEvent('keypress', { keyCode: 32, which: 32, bubbles: true });
-          domH5PEditorVerticalTabs?.querySelector('.h5p-vtab-a')?.dispatchEvent(event);
-        });
-      }
+        /*
+         * Workaround for VerticalTabs allowing to remove all items even when a minimum value is set.
+         * Pull request for VerticalTabs widget to fix this issue dates back to Nov 2022. Who
+         * wants to bet when H5P Group will address this issue (HFP-3989, H5P-3599)?
+         * @see {@link https://github.com/h5p/h5p-editor-vertical-tabs/pull/3}
+         */
+        if (this.list.field.min && (this.list.getValue() ?? []).length < this.list.field.min) {
+          this.list.addItem();
+          window.requestAnimationFrame(() => {
+            const event = new KeyboardEvent('keypress', { keyCode: 32, which: 32, bubbles: true });
+            domH5PEditorVerticalTabs?.querySelector('.h5p-vtab-a')?.dispatchEvent(event);
+          });
+        }
 
-      this.handleChanged();
+        this.handleChanged();
+      });
     });
   }
 
