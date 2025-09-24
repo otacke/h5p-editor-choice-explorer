@@ -5,11 +5,11 @@ export default class WeightsMatrix {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       uuid: '',
-      decimal_precision: 1000
+      decimal_precision: 1000,
     }, params);
 
     this.callbacks = Util.extend({
-      onUpdated: () => {}
+      onUpdated: () => {},
     }, callbacks);
 
     this.cellParams = [];
@@ -123,7 +123,7 @@ export default class WeightsMatrix {
    */
   isValid() {
     return this.cellParams.every((params) =>
-      params.targets.every((target) => this.isFieldValid(target.field))
+      params.targets.every((target) => this.isFieldValid(target.field)),
     );
   }
 

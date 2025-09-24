@@ -35,13 +35,13 @@ export default class Weights {
       {
         uuid: matrixUUID,
         decimalPrecision: DECIMAL_PRECISION,
-        dictionary: this.dictionary
+        dictionary: this.dictionary,
       },
       {
         onUpdated: () => {
           this.updateValues();
-        }
-      }
+        },
+      },
     );
     this.dom.append(this.matrix.getDOM());
 
@@ -63,8 +63,8 @@ export default class Weights {
             window.requestAnimationFrame(() => {
               this.matrix.update(this.params, this.decisionsList.getValue(), this.targetsList.getValue());
             });
-          }
-        }
+          },
+        },
       );
       if ((this.decisionsList.getValue() ?? []).length === 0) {
         this.decisionsList.addItem();
@@ -77,8 +77,8 @@ export default class Weights {
             window.requestAnimationFrame(() => {
               this.matrix.update(this.params, this.decisionsList.getValue(), this.targetsList.getValue());
             });
-          }
-        }
+          },
+        },
       );
       if ((this.targetsList.getValue() ?? []).length === 0) {
         this.targetsList.list.addItem();
@@ -88,8 +88,8 @@ export default class Weights {
         this.params = [
           {
             decisionId: this.decisionsList.getValue()[0].id,
-            targets: [{ targetId: this.targetsList.getValue()[0].id, weight: 0 }]
-          }
+            targets: [{ targetId: this.targetsList.getValue()[0].id, weight: 0 }],
+          },
         ];
       }
 
@@ -185,8 +185,8 @@ export default class Weights {
       decisionId: params.decisionId,
       targets: params.targets.map((target) => ({
         targetId: target.targetId,
-        weight: Math.round(parseFloat(target.field.value) * DECIMAL_PRECISION) / DECIMAL_PRECISION
-      }))
+        weight: Math.round(parseFloat(target.field.value) * DECIMAL_PRECISION) / DECIMAL_PRECISION,
+      })),
     }));
 
     this.params = newParams;

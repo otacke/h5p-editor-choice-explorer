@@ -13,14 +13,14 @@ export default class ListWrapper {
    */
   constructor(list, callbacks = {}) {
     this.callbacks = Util.extend({
-      onChanged: () => {}
+      onChanged: () => {},
     }, callbacks);
 
     this.list = list;
     this.lastListValue = this.list.getValue();
 
     Util.callOnceVisible(() => {
-      this.dom = document.querySelector('label[for="' + this.list.getId() + '"]')?.parentElement;
+      this.dom = document.querySelector(`label[for="${  this.list.getId()  }"]`)?.parentElement;
 
       // This will fail if someone uses other list widgets with their own DOM structure.
       const domH5PEditorList = this.dom.querySelector(`#${this.list.getId()}`);
@@ -80,7 +80,7 @@ export default class ListWrapper {
 
   /**
    * Get values from list.
-   * @returns {*[]|undefined} List values.
+   * @returns {object[]|string[]|number[]|undefined} List values.
    */
   getValue() {
     return this.list.getValue();

@@ -21,7 +21,7 @@ export default class AutoUUID {
     this.passReadies = true;
 
     this.$container = H5P.jQuery('<div>', {
-      class: 'h5peditor-auto-uuid'
+      class: 'h5peditor-auto-uuid',
     });
 
     if (this.field.type !== 'text') {
