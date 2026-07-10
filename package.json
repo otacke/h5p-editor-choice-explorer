@@ -1,6 +1,5 @@
 {
   "name": "h5peditor-choice-explorer",
-  "version": "1.0.1",
   "description": "H5P.ChoiceExplorer editor",
   "private": true,
   "scripts": {
